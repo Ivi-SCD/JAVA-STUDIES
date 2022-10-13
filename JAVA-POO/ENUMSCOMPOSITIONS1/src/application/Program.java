@@ -40,7 +40,6 @@ public class Program {
 		int n = sc.nextInt();
 		
 		for(int i = 0; i < n; i++) {
-			
 			System.out.println("Enter contract #" + (i+1) + " data.");
 			System.out.print("Date: DD/MM/YYY: ");
 			Date contractDate = format.parse(sc.next());
