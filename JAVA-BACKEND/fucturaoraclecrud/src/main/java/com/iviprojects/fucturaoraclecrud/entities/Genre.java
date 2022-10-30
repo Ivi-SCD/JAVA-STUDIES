@@ -3,6 +3,7 @@ package com.iviprojects.fucturaoraclecrud.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,12 +21,15 @@ public class Genre implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_book")
+	@JoinColumn(name = "book_id")
 	private Book textbook;
 	
+	@Deprecated
 	public Genre() {
 	}
 
@@ -36,9 +40,7 @@ public class Genre implements Serializable{
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}

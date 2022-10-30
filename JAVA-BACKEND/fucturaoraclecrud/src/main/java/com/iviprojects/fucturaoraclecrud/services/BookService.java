@@ -25,16 +25,16 @@ public class BookService {
 		return book.orElseThrow(() -> new ObjectNotFoundException(null , book.get().getTitulo()));
 	}
 	
-	public Book insertUser(Book book) {
+	public Book insertBook(Book book) {
 		return bookRepository.save(book);
 	}
 	
-	public void deleteUser(Long id) {
+	public void deleteBook(Long id) {
 		findById(id);
 		bookRepository.deleteById(id);
 	}
 	
-	public Book updateUser(Book newBook) {
+	public Book updateBook(Book newBook) {
 		Optional <Book> oldBook = bookRepository.findById(newBook.getId());
 		updateBookData(oldBook.get(), newBook);
 		return bookRepository.save(oldBook.get());
@@ -44,5 +44,4 @@ public class BookService {
 		oldBook.setAuthor(newBook.getAuthor());
 		oldBook.setTitulo(newBook.getTitulo());
 	}
-	
 }

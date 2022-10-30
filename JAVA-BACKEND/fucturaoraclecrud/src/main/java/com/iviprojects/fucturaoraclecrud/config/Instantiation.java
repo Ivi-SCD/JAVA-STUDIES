@@ -1,7 +1,6 @@
 package com.iviprojects.fucturaoraclecrud.config;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -9,17 +8,17 @@ import org.springframework.context.annotation.Configuration;
 
 import com.iviprojects.fucturaoraclecrud.entities.Book;
 import com.iviprojects.fucturaoraclecrud.entities.Genre;
-import com.iviprojects.fucturaoraclecrud.repositories.BookRepository;
-import com.iviprojects.fucturaoraclecrud.repositories.GenreRepository;
+import com.iviprojects.fucturaoraclecrud.services.BookService;
+import com.iviprojects.fucturaoraclecrud.services.GenreService;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
 	
 	@Autowired
-	private BookRepository bookRepository;
+	private BookService bookService;
 
 	@Autowired
-	private GenreRepository genreRepository;
+	private GenreService genreService;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -29,12 +28,24 @@ public class Instantiation implements CommandLineRunner {
 		Genre g3 = new Genre("Suspense");
 		Genre g4 = new Genre("Policial");
 		
-		genreRepository.saveAll(Arrays.asList(g1,g2,g3,g4));
+		Book l1 = new Book("Frankestein", "Mary Shelley");
+		Book l2 = new Book("It: A coisa", "Stephen King");
+		Book l3 = new Book("Outsider", "Stephen King");
 		
-		Book l1 = new Book("Frankestein", "Mary Shelley", new HashSet<>(Arrays.asList(g1,g3)));
-		Book l2 = new Book("It: A coisa", "Stephen King", new HashSet<>(Arrays.asList(g1)));
-		Book l3 = new Book("Outsider", "Stephen King", new HashSet<>(Arrays.asList(g1,g2,g3,g4)));
+		l1.getGenre().addAll(Arrays.asList(g1,g2));
+		l2.getGenre().addAll(Arrays.asList(g1));
+		l3.getGenre().addAll(Arrays.asList(g1,g2,g3,g4));
 		
-		bookRepository.saveAll(Arrays.asList(l1,l2,l3));
+		l1.saveAllGenres();
+		l2.saveAllGenres();
+		l3.saveAllGenres();
+		
+		genreService.insertGenre(g1);
+		genreService.insertGenre(g2);
+		genreService.insertGenre(g3);
+		genreService.insertGenre(g4);
+		bookService.insertBook(l1);
+		bookService.insertBook(l2);
+		bookService.insertBook(l3);
 	}
 }

@@ -1,9 +1,9 @@
 package com.iviprojects.fucturaoraclecrud.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,23 +26,19 @@ public class Book implements Serializable {
 	private String author;
 	
 	@OneToMany(mappedBy = "textbook")
-	private Set <Genre> genre = new HashSet<>();
+	private List <Genre> genre = new ArrayList<>();
 	
+	@Deprecated
 	public Book() {
 	}
 
-	public Book(String titulo, String author, Set <Genre> genre) {
+	public Book(String titulo, String author) {
 		this.titulo = titulo;
 		this.author = author;
-		this.genre.addAll(genre);
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getTitulo() {
@@ -61,8 +57,12 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 
-	public Set <Genre> getGenre() {
+	public List <Genre> getGenre() {
 		return genre;
+	}
+	
+	public void saveAllGenres() {
+		genre.forEach(e -> e.setTexbook(new Book(this.titulo, this.author)));
 	}
 
 	@Override
