@@ -1,15 +1,14 @@
 package com.iviprojects.fucturaoraclecrud.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,13 +21,11 @@ public class Genre implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
 	private String name;
 	
-	@ManyToOne
-	@JoinColumn(name = "book_id")
-	private Book textbook;
-	
+	@ManyToMany(mappedBy = "genres")
+	private List <Book> textbooks;
+
 	@Deprecated
 	public Genre() {
 	}
@@ -44,16 +41,13 @@ public class Genre implements Serializable{
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public Book getTexbook() {
-		return textbook;
-	}
-
-	public void setTexbook(Book texbook) {
-		this.textbook = texbook;
+	public List <Book> getTextbooks () {
+		return textbooks;
 	}
 
 	@Override

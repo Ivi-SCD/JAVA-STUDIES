@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +27,11 @@ public class Book implements Serializable {
 	private String titulo;
 	private String author;
 	
-	@OneToMany(mappedBy = "textbook")
-	private List <Genre> genre = new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "BOOKS_GENRES",
+	joinColumns = @JoinColumn(name = "book_id"),
+	inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	private List <Genre> genres = new ArrayList<>();
 	
 	@Deprecated
 	public Book() {
@@ -57,14 +62,10 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 
-	public List <Genre> getGenre() {
-		return genre;
+	public List <Genre> getGenres() {
+		return genres;
 	}
 	
-	public void saveAllGenres() {
-		genre.forEach(e -> e.setTexbook(new Book(this.titulo, this.author)));
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

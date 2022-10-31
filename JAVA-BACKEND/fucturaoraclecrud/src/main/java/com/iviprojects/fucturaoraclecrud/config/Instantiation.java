@@ -27,18 +27,15 @@ public class Instantiation implements CommandLineRunner {
 		Genre g2 = new Genre("Romance");
 		Genre g3 = new Genre("Suspense");
 		Genre g4 = new Genre("Policial");
-		
+	
 		Book l1 = new Book("Frankestein", "Mary Shelley");
 		Book l2 = new Book("It: A coisa", "Stephen King");
 		Book l3 = new Book("Outsider", "Stephen King");
 		
-		l1.getGenre().addAll(Arrays.asList(g1,g2));
-		l2.getGenre().addAll(Arrays.asList(g1));
-		l3.getGenre().addAll(Arrays.asList(g1,g2,g3,g4));
+		l1.getGenres().addAll(Arrays.asList(g1,g2));
+		l2.getGenres().addAll(Arrays.asList(g1));
+		l3.getGenres().addAll(Arrays.asList(g1,g2,g3,g4));
 		
-		l1.saveAllGenres();
-		l2.saveAllGenres();
-		l3.saveAllGenres();
 		
 		genreService.insertGenre(g1);
 		genreService.insertGenre(g2);
