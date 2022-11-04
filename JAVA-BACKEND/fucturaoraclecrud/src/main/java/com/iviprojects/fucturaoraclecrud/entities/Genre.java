@@ -66,4 +66,9 @@ public class Genre implements Serializable{
 		Genre other = (Genre) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Genre [id=" + id + ", name=" + name + ", textbooks=" + textbooks + "]";
+	}
 }

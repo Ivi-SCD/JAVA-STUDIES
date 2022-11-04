@@ -32,10 +32,10 @@ public class Instantiation implements CommandLineRunner {
 		Book l2 = new Book("It: A coisa", "Stephen King");
 		Book l3 = new Book("Outsider", "Stephen King");
 		
+		System.out.println("CREATE");
 		l1.getGenres().addAll(Arrays.asList(g1,g2));
 		l2.getGenres().addAll(Arrays.asList(g1));
 		l3.getGenres().addAll(Arrays.asList(g1,g2,g3,g4));
-		
 		
 		genreService.insertGenre(g1);
 		genreService.insertGenre(g2);
@@ -44,5 +44,13 @@ public class Instantiation implements CommandLineRunner {
 		bookService.insertBook(l1);
 		bookService.insertBook(l2);
 		bookService.insertBook(l3);
+		
+		
+		System.out.println("\nUPDATE");
+		bookService.updateBookData(l3, new Book("Edgar Allan Poe: Volume 1", "Edgar Allan Poe"));
+		bookService.updateBook(l3);
+
+		
+		
 	}
 }

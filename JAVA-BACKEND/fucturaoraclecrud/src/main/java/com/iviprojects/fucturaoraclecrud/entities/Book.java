@@ -82,4 +82,9 @@ public class Book implements Serializable {
 		Book other = (Book) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", titulo=" + titulo + ", author=" + author + ", genres=" + genres + "]";
+	}
 }
