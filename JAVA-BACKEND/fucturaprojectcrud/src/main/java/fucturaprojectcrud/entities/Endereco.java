@@ -1,8 +1,9 @@
 package fucturaprojectcrud.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_endereco")
-public class Endereco {
+public class Endereco implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +28,8 @@ public class Endereco {
 	private String uf;
 	
 	@OneToMany(mappedBy = "endereco")
-	private List <Aluno> pessoas = new ArrayList<>();
+	private Set <Aluno> pessoas = new HashSet<>();
 	
-	@Deprecated
 	public Endereco() {
 	}
 
@@ -79,7 +81,7 @@ public class Endereco {
 		this.uf = uf;
 	}
 
-	public List <Aluno> getPessoas() {
+	public Set <Aluno> getPessoas() {
 		return pessoas;
 	}
 	

@@ -1,8 +1,11 @@
 package fucturaprojectcrud.entities;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,13 +15,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_aluno")
-public class Aluno {
+public class Aluno implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +41,9 @@ public class Aluno {
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;	
 	
-	//List <Matricula> matricula = new ArrayList<>(); 
+	@OneToMany(mappedBy = "id.aluno")
+	private List <Matricula> matriculasAluno = new ArrayList<>();
 	
-	@Deprecated
 	public Aluno() {
 	}
 
@@ -93,6 +99,10 @@ public class Aluno {
 	
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public List <Matricula> getMatriculasAluno() {
+		return matriculasAluno;
 	}
 
 	@Override
