@@ -3,6 +3,7 @@ package fucturaprojectcrud.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +23,10 @@ public class Disciplina implements Serializable {
 	
 	private String nome;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Curso curso;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Professor professor;
 	
 	public Disciplina() {

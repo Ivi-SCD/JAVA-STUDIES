@@ -41,7 +41,7 @@ public class Aluno implements Serializable {
 	@JoinColumn(name = "endereco_id")
 	private Endereco endereco;	
 	
-	@OneToMany(mappedBy = "id.aluno")
+	@OneToMany(mappedBy = "id.aluno", cascade = CascadeType.ALL)
 	private List <Matricula> matriculasAluno = new ArrayList<>();
 	
 	public Aluno() {

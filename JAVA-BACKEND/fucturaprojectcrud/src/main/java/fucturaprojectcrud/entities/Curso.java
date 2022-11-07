@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,10 +26,10 @@ public class Curso implements Serializable {
 	private String nome;
 	private Integer semestres;
 	
-	@OneToMany(mappedBy = "id.curso")
+	@OneToMany(mappedBy = "id.curso", cascade = CascadeType.ALL)
 	private List <Matricula> matriculasCurso = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "curso")
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
 	private List <Disciplina> matriculasDisciplina = new ArrayList<>();
 	
 	public Curso() {
