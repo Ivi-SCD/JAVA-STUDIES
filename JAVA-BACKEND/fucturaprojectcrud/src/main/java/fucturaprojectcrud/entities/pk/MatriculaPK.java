@@ -22,9 +22,6 @@ public class MatriculaPK implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "curso_id")
 	private Curso curso;
-
-	public MatriculaPK() {
-	}
 	
 	public Aluno getAluno() {
 		return aluno;

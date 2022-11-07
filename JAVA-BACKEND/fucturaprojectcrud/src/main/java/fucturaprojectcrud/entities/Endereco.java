@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Endereco implements Serializable {
 	private String cidade;
 	private String uf;
 	
-	@OneToMany(mappedBy = "endereco")
+	@OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
 	private Set <Aluno> pessoas = new HashSet<>();
 	
 	public Endereco() {
