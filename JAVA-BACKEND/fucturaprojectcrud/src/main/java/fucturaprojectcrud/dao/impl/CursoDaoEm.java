@@ -5,12 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaprojectcrud.dao.CursoDao;
 import fucturaprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.db.DbPersistenceException;
+import fucturaprojectcrud.db.DbUnexpectedException;
 import fucturaprojectcrud.entities.Curso;
 
 public class CursoDaoEm implements CursoDao {
@@ -25,8 +28,10 @@ public class CursoDaoEm implements CursoDao {
 			em.getTransaction().begin();
 			em.persist(curso);
 			em.getTransaction().commit();
+		} catch (PersistenceException e) {
+			throw new DbPersistenceException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
@@ -46,7 +51,7 @@ public class CursoDaoEm implements CursoDao {
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
@@ -61,14 +66,21 @@ public class CursoDaoEm implements CursoDao {
 			
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
 	@Override
 	public List<Curso> findAll() {
+		try {
 		TypedQuery <Curso> query = em.createQuery("SELECT curso FROM Curso curso", Curso.class);
+		if(query.getResultList().isEmpty()) {
+			throw new DbNotFoundException("List of Type <" + Curso.class + ">");
+		}
 		return query.getResultList();
+		} catch (Exception e) {
+			throw new DbUnexpectedException(e.getMessage());
+		}
 	}
 
 	@Override
@@ -87,7 +99,6 @@ public class CursoDaoEm implements CursoDao {
 	}
 	
 	private Curso updateCursoData(Curso velhoCurso, Curso novoCurso) {
-		
 		velhoCurso.setNome(novoCurso.getNome());
 		velhoCurso.setSemestres(novoCurso.getSemestres());
 		

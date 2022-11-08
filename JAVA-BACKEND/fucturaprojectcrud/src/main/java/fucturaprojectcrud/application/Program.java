@@ -68,8 +68,8 @@ public class Program {
 		// C - Create	
 		listAlunos.forEach(adao::insert);
 		listCursos.forEach(cdao::insert);
+		adao.insert(new Aluno());
 		listProfessores.forEach(pdao::insert);
-		
 		listDisciplinas.forEach(ddao::insert);
 		listMatriculas.forEach(mdao::insert);
 		
@@ -86,6 +86,8 @@ public class Program {
 		adao.deleteById(3L);
 		cdao.deleteById(3L);
 		pdao.deleteById(2L);
-
+		
+		
+		System.out.println(new Aluno());
 	}
 }

@@ -5,15 +5,17 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaprojectcrud.dao.EnderecoDao;
 import fucturaprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.db.DbPersistenceException;
+import fucturaprojectcrud.db.DbUnexpectedException;
 import fucturaprojectcrud.entities.Endereco;
 
 public class EnderecoDaoEm implements EnderecoDao {
-	
 	
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
 	private EntityManager em = emf.createEntityManager();
@@ -25,8 +27,10 @@ public class EnderecoDaoEm implements EnderecoDao {
 			em.getTransaction().begin();
 			em.persist(endereco);
 			em.getTransaction().commit();
+		} catch (PersistenceException e) {
+			throw new DbPersistenceException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
@@ -40,7 +44,7 @@ public class EnderecoDaoEm implements EnderecoDao {
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 	
@@ -54,14 +58,21 @@ public class EnderecoDaoEm implements EnderecoDao {
 			
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
 	@Override
 	public List <Endereco> findAll() {
+		try {
 		TypedQuery <Endereco> query = em.createQuery("SELECT endereco FROM Endereco endereco", Endereco.class);
+		if(query.getResultList().isEmpty()) {
+			throw new DbNotFoundException("List of Type <" + Endereco.class + ">");
+		}
 		return query.getResultList();
+		} catch (Exception e) {
+			throw new DbUnexpectedException(e.getMessage());
+		}
 	}
 	
 	@Override
@@ -80,7 +91,6 @@ public class EnderecoDaoEm implements EnderecoDao {
 	}
 	
 	private Endereco updateEnderecoData(Endereco velhoEndereco, Endereco novoEndereco) {
-		
 		velhoEndereco.setBairro(novoEndereco.getBairro());
 		velhoEndereco.setCidade(novoEndereco.getCidade());
 		velhoEndereco.setNumero(novoEndereco.getNumero());
@@ -89,5 +99,4 @@ public class EnderecoDaoEm implements EnderecoDao {
 		
 		return velhoEndereco;
 	}
-	
 }

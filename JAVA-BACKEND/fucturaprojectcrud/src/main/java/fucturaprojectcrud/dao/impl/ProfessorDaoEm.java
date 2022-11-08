@@ -5,12 +5,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaprojectcrud.dao.ProfessorDao;
 import fucturaprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.db.DbPersistenceException;
+import fucturaprojectcrud.db.DbUnexpectedException;
 import fucturaprojectcrud.entities.Professor;
 
 public class ProfessorDaoEm implements ProfessorDao {
@@ -25,8 +28,10 @@ public class ProfessorDaoEm implements ProfessorDao {
 			em.getTransaction().begin();
 			em.persist(professor);
 			em.getTransaction().commit();
+		} catch (PersistenceException e) {
+			throw new DbPersistenceException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
@@ -43,7 +48,7 @@ public class ProfessorDaoEm implements ProfessorDao {
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
@@ -58,14 +63,21 @@ public class ProfessorDaoEm implements ProfessorDao {
 			
 			em.getTransaction().commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new DbUnexpectedException(e.getMessage());
 		}
 	}
 
 	@Override
 	public List<Professor> findAll() {
-		TypedQuery <Professor> query = em.createQuery("SELECT professor FROM Professor professor", Professor.class);
-		return query.getResultList();
+		try {
+			TypedQuery <Professor> query = em.createQuery("SELECT professor FROM Professor professor", Professor.class);
+			if(query.getResultList().isEmpty()) {
+				throw new DbNotFoundException("List of Type <" + Professor.class + ">");
+			}
+			return query.getResultList();
+		} catch (Exception e) {
+			throw new DbUnexpectedException(e.getMessage());
+		}
 	}
 	
 	@Override
@@ -84,7 +96,6 @@ public class ProfessorDaoEm implements ProfessorDao {
 	}
 	
 	private Professor updateProfessorData(Professor velhoProfessor, Professor novoProfessor) {
-		
 		velhoProfessor.setNome(novoProfessor.getNome());
 		velhoProfessor.setGraduacao(novoProfessor.getGraduacao());
 		velhoProfessor.setTelefoneNumero(novoProfessor.getTelefoneNumero());

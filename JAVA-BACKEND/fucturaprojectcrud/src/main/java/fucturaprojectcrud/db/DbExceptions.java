@@ -6,7 +6,6 @@ public class DbExceptions extends RuntimeException {
 	
 	public DbExceptions(String msg, Integer code) {
 		super("ERRORMESSAGE: " + msg + "\nCODEERROR: " 
-	+ code + "\nSTACKTRACE: ");
+	+ code + "\nWHERE: ");
 	}
-
 }

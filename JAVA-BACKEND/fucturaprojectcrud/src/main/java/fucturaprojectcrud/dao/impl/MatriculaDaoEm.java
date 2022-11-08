@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import fucturaprojectcrud.dao.MatriculaDao;
 import fucturaprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.db.DbPersistenceException;
+import fucturaprojectcrud.db.DbUnexpectedException;
 import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {
@@ -22,15 +25,24 @@ public class MatriculaDaoEm implements MatriculaDao {
 			em.getTransaction().begin();
 			em.merge(matricula);
 			em.getTransaction().commit();
+		} catch (PersistenceException e) {
+			throw new DbPersistenceException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+			throw new DbUnexpectedException(e.getMessage());
+		}
 	}
 	
 	@Override
 	public List <Matricula> findAll() {
-		TypedQuery <Matricula> query = em.createQuery("SELECT matricula FROM Matricula matricula", Matricula.class);
-		return query.getResultList();
+		try {
+			TypedQuery <Matricula> query = em.createQuery("SELECT matricula FROM Matricula matricula", Matricula.class);
+			if(query.getResultList().isEmpty()) {
+				throw new DbNotFoundException("List of Type <" + Matricula.class + ">");
+			}
+			return query.getResultList();
+		} catch(Exception e) {
+			throw new DbUnexpectedException(e.getMessage());
+		}
 	}
 	
 	@Override
@@ -47,5 +59,4 @@ public class MatriculaDaoEm implements MatriculaDao {
 		em.close();
 		emf.close();
 	}
-	
 }

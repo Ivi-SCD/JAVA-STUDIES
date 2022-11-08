@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +26,11 @@ public class Endereco implements Serializable {
 	private String rua;
 	private Integer numero;
 	private String bairro;
+	
+	@Column(nullable = false)
 	private String cidade;
+	
+	@Column(nullable = false)
 	private String uf;
 	
 	@OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
