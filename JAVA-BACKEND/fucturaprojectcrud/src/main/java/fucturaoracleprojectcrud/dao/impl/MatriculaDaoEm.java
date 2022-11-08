@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import fucturaoracleprojectcrud.dao.MatriculaDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {
@@ -35,6 +36,9 @@ public class MatriculaDaoEm implements MatriculaDao {
 	@Override
 	public Matricula findById(Long id) {
 		Matricula matricula = em.find(Matricula.class, id);
+		if (matricula == null) {
+			throw new DbNotFoundException(id);
+		}
 		return matricula;
 	}
 	

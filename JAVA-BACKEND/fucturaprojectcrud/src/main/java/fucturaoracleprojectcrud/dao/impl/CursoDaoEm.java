@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaoracleprojectcrud.dao.CursoDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Curso;
 
 public class CursoDaoEm implements CursoDao {
@@ -73,6 +74,9 @@ public class CursoDaoEm implements CursoDao {
 	@Override
 	public Curso findById(Long id) {
 		Curso curso = em.find(Curso.class, id);
+		if(curso == null) {
+			throw new DbNotFoundException(id);
+		}
 		return curso;
 	}
 	

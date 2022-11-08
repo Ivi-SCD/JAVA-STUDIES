@@ -19,8 +19,9 @@ import fucturaprojectcrud.entities.Matricula;
 import fucturaprojectcrud.entities.Professor;
 
 public class Program {
+	
 	public static void main(String [] args) throws ParseException {
-
+					
 		EnderecoDao edao = DaoFactory.createEnderecoDao();
 		AlunoDao adao = DaoFactory.createAlunoDao();
 		ProfessorDao pdao = DaoFactory.createProfessorDao();
@@ -63,6 +64,7 @@ public class Program {
 		List <Matricula> listMatriculas = Arrays.asList(matricula_um,matricula_dois,matricula_tres);
 		List <Disciplina> listDisciplinas = Arrays.asList(disciplina_um,disciplina_dois,disciplina_tres,disciplina_quatro);
 		
+		
 		// C - Create	
 		listAlunos.forEach(adao::insert);
 		listCursos.forEach(cdao::insert);
@@ -84,5 +86,6 @@ public class Program {
 		adao.deleteById(3L);
 		cdao.deleteById(3L);
 		pdao.deleteById(2L);
+
 	}
 }

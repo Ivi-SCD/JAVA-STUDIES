@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaoracleprojectcrud.dao.EnderecoDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Endereco;
 
 public class EnderecoDaoEm implements EnderecoDao {
@@ -66,6 +67,9 @@ public class EnderecoDaoEm implements EnderecoDao {
 	@Override
 	public Endereco findById(Long id) {
 		Endereco endereco = em.find(Endereco.class, id);
+		if(endereco == null) {
+			throw new DbNotFoundException(id);
+		}
 		return endereco;
 	}
 

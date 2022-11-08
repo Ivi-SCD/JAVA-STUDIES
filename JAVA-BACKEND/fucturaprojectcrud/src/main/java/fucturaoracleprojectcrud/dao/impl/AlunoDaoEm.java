@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaoracleprojectcrud.dao.AlunoDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Aluno;
 
 public class AlunoDaoEm implements AlunoDao {
@@ -34,10 +35,12 @@ public class AlunoDaoEm implements AlunoDao {
 		try {
 			em.getTransaction().begin();
 			
-			Query query = em.createNativeQuery("DELETE FROM TB_MATRICULA WHERE aluno_id = " + id);
-			query.executeUpdate();
-			
 			Aluno aluno = findById(id);
+			if (aluno != null) {
+				Query query = em.createNativeQuery("DELETE FROM TB_MATRICULA WHERE aluno_id = " + id);
+				query.executeUpdate();
+			}
+			
 			em.remove(aluno);
 			
 			em.getTransaction().commit();
@@ -70,6 +73,9 @@ public class AlunoDaoEm implements AlunoDao {
 	@Override
 	public Aluno findById(Long id) {
 		Aluno aluno = em.find(Aluno.class, id);
+		if (aluno == null) {
+			throw new DbNotFoundException(id);
+		}
 		return aluno;
 	}
 	

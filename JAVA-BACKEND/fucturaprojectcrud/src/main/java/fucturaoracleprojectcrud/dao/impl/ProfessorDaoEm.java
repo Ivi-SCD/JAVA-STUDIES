@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaoracleprojectcrud.dao.ProfessorDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Professor;
 
 public class ProfessorDaoEm implements ProfessorDao {
@@ -70,6 +71,9 @@ public class ProfessorDaoEm implements ProfessorDao {
 	@Override
 	public Professor findById(Long id) {
 		Professor professor = em.find(Professor.class, id);
+		if(professor == null) {
+			throw new DbNotFoundException(id);
+		}
 		return professor;
 	}
 	

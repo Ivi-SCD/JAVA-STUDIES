@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import fucturaoracleprojectcrud.dao.DisciplinaDao;
+import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Disciplina;
 
 public class DisciplinaDaoEm implements DisciplinaDao {
@@ -66,6 +67,9 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 	@Override
 	public Disciplina findById(Long id) {
 		Disciplina disciplina = em.find(Disciplina.class, id);
+		if(disciplina == null) {
+			throw new DbNotFoundException(id);
+		}
 		return disciplina;
 	}
 	
