@@ -64,11 +64,9 @@ public class Program {
 		List <Matricula> listMatriculas = Arrays.asList(matricula_um,matricula_dois,matricula_tres);
 		List <Disciplina> listDisciplinas = Arrays.asList(disciplina_um,disciplina_dois,disciplina_tres,disciplina_quatro);
 		
-		
 		// C - Create	
 		listAlunos.forEach(adao::insert);
 		listCursos.forEach(cdao::insert);
-		adao.insert(new Aluno());
 		listProfessores.forEach(pdao::insert);
 		listDisciplinas.forEach(ddao::insert);
 		listMatriculas.forEach(mdao::insert);
@@ -86,8 +84,5 @@ public class Program {
 		adao.deleteById(3L);
 		cdao.deleteById(3L);
 		pdao.deleteById(2L);
-		
-		
-		System.out.println(new Aluno());
 	}
 }
