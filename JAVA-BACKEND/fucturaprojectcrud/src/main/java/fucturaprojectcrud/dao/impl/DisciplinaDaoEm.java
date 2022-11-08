@@ -8,8 +8,8 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.dao.DisciplinaDao;
+import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Disciplina;
 
 public class DisciplinaDaoEm implements DisciplinaDao {

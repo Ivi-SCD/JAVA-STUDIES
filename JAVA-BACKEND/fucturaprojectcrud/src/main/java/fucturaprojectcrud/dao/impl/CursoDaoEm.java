@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.dao.CursoDao;
+import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Curso;
 
 public class CursoDaoEm implements CursoDao {

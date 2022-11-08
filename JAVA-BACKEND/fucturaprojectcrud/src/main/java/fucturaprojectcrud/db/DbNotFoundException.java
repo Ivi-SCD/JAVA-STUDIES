@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.db;
+package fucturaprojectcrud.db;
 
 public class DbNotFoundException extends DbExceptions {
 

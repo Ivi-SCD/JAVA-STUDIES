@@ -7,8 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import fucturaoracleprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.dao.MatriculaDao;
+import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {
