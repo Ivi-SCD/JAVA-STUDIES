@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.dao.impl;
+package fucturaprojectcrud.dao.impl;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.dao.EnderecoDao;
 import fucturaoracleprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.dao.EnderecoDao;
 import fucturaprojectcrud.entities.Endereco;
 
 public class EnderecoDaoEm implements EnderecoDao {

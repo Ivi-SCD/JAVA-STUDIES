@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.dao;
+package fucturaprojectcrud.dao;
 
 import java.util.List;
 

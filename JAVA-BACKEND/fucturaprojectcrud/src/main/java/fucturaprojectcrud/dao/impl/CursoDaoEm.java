@@ -1,28 +1,29 @@
-package fucturaoracleprojectcrud.dao.impl;
+package fucturaprojectcrud.dao.impl;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.dao.DisciplinaDao;
 import fucturaoracleprojectcrud.db.DbNotFoundException;
-import fucturaprojectcrud.entities.Disciplina;
+import fucturaprojectcrud.dao.CursoDao;
+import fucturaprojectcrud.entities.Curso;
 
-public class DisciplinaDaoEm implements DisciplinaDao {
-	
+public class CursoDaoEm implements CursoDao {
+
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
 	private EntityManager em = emf.createEntityManager();
 
 	@Override
 	@Transactional
-	public void insert(Disciplina disciplina) {
+	public void insert(Curso curso) {
 		try {
 			em.getTransaction().begin();
-			em.merge(disciplina);
+			em.persist(curso);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,8 +35,14 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 		try {
 			em.getTransaction().begin();
 			
-			Disciplina disciplina = findById(id);
-			em.remove(disciplina);
+			Query query1 = em.createNativeQuery("DELETE FROM TB_MATRICULA WHERE curso_id = " + id);
+			Query query2 = em.createNativeQuery("DELETE FROM TB_DISCIPLINA WHERE curso_id = " + id);
+			
+			query1.executeUpdate();
+			query2.executeUpdate();
+			
+			Curso curso = findById(id);
+			em.remove(curso);
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {
@@ -45,12 +52,12 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 
 	@Override
 	@Transactional
-	public void updateDisciplina(Long id, Disciplina novaDisciplina) {
+	public void updateCurso(Long id, Curso novoCurso) {
 		try {
 			em.getTransaction().begin();
 			
-			Disciplina disciplina = updateDisciplinaData(findById(id), novaDisciplina);
-			em.merge(disciplina);
+			Curso curso = updateCursoData(findById(id), novoCurso);
+			em.merge(curso);
 			
 			em.getTransaction().commit();
 		} catch (Exception e) {
@@ -59,18 +66,18 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 	}
 
 	@Override
-	public List<Disciplina> findAll() {
-		TypedQuery <Disciplina> query = em.createQuery("SELECT disciplina FROM Disciplina disciplina", Disciplina.class);
+	public List<Curso> findAll() {
+		TypedQuery <Curso> query = em.createQuery("SELECT curso FROM Curso curso", Curso.class);
 		return query.getResultList();
 	}
-	
+
 	@Override
-	public Disciplina findById(Long id) {
-		Disciplina disciplina = em.find(Disciplina.class, id);
-		if(disciplina == null) {
+	public Curso findById(Long id) {
+		Curso curso = em.find(Curso.class, id);
+		if(curso == null) {
 			throw new DbNotFoundException(id);
 		}
-		return disciplina;
+		return curso;
 	}
 	
 	@Override
@@ -79,12 +86,11 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 		emf.close();
 	}
 	
-	private Disciplina updateDisciplinaData(Disciplina velhaDisciplina, Disciplina novaDisciplina) {
+	private Curso updateCursoData(Curso velhoCurso, Curso novoCurso) {
 		
-		velhaDisciplina.setNome(novaDisciplina.getNome());
-		velhaDisciplina.setCurso(novaDisciplina.getCurso());
-		velhaDisciplina.setProfessores(novaDisciplina.getProfessores());
+		velhoCurso.setNome(novoCurso.getNome());
+		velhoCurso.setSemestres(novoCurso.getSemestres());
 		
-		return velhaDisciplina;
+		return velhoCurso;
 	}
 }

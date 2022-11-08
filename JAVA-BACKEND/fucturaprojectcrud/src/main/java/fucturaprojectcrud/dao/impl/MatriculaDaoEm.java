@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.dao.impl;
+package fucturaprojectcrud.dao.impl;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import fucturaoracleprojectcrud.dao.MatriculaDao;
 import fucturaoracleprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.dao.MatriculaDao;
 import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {

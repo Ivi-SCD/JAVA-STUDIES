@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.dao.impl;
+package fucturaprojectcrud.dao.impl;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.dao.ProfessorDao;
 import fucturaoracleprojectcrud.db.DbNotFoundException;
+import fucturaprojectcrud.dao.ProfessorDao;
 import fucturaprojectcrud.entities.Professor;
 
 public class ProfessorDaoEm implements ProfessorDao {

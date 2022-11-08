@@ -1,11 +1,11 @@
-package fucturaoracleprojectcrud.dao;
+package fucturaprojectcrud.dao;
 
-import fucturaoracleprojectcrud.dao.impl.AlunoDaoEm;
-import fucturaoracleprojectcrud.dao.impl.CursoDaoEm;
-import fucturaoracleprojectcrud.dao.impl.DisciplinaDaoEm;
-import fucturaoracleprojectcrud.dao.impl.EnderecoDaoEm;
-import fucturaoracleprojectcrud.dao.impl.MatriculaDaoEm;
-import fucturaoracleprojectcrud.dao.impl.ProfessorDaoEm;
+import fucturaprojectcrud.dao.impl.AlunoDaoEm;
+import fucturaprojectcrud.dao.impl.CursoDaoEm;
+import fucturaprojectcrud.dao.impl.DisciplinaDaoEm;
+import fucturaprojectcrud.dao.impl.EnderecoDaoEm;
+import fucturaprojectcrud.dao.impl.MatriculaDaoEm;
+import fucturaprojectcrud.dao.impl.ProfessorDaoEm;
 
 public class DaoFactory {
 	

@@ -1,4 +1,4 @@
-package fucturaoracleprojectcrud.dao.impl;
+package fucturaprojectcrud.dao.impl;
 
 import java.util.List;
 
@@ -9,21 +9,21 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import fucturaoracleprojectcrud.dao.CursoDao;
 import fucturaoracleprojectcrud.db.DbNotFoundException;
-import fucturaprojectcrud.entities.Curso;
+import fucturaprojectcrud.dao.AlunoDao;
+import fucturaprojectcrud.entities.Aluno;
 
-public class CursoDaoEm implements CursoDao {
+public class AlunoDaoEm implements AlunoDao {
 
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
 	private EntityManager em = emf.createEntityManager();
 
 	@Override
 	@Transactional
-	public void insert(Curso curso) {
+	public void insert(Aluno aluno) {
 		try {
 			em.getTransaction().begin();
-			em.persist(curso);
+			em.persist(aluno);
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,14 +35,13 @@ public class CursoDaoEm implements CursoDao {
 		try {
 			em.getTransaction().begin();
 			
-			Query query1 = em.createNativeQuery("DELETE FROM TB_MATRICULA WHERE curso_id = " + id);
-			Query query2 = em.createNativeQuery("DELETE FROM TB_DISCIPLINA WHERE curso_id = " + id);
+			Aluno aluno = findById(id);
+			if (aluno != null) {
+				Query query = em.createNativeQuery("DELETE FROM TB_MATRICULA WHERE aluno_id = " + id);
+				query.executeUpdate();
+			}
 			
-			query1.executeUpdate();
-			query2.executeUpdate();
-			
-			Curso curso = findById(id);
-			em.remove(curso);
+			em.remove(aluno);
 			
 			em.getTransaction().commit();
 		} catch(Exception e) {
@@ -52,12 +51,12 @@ public class CursoDaoEm implements CursoDao {
 
 	@Override
 	@Transactional
-	public void updateCurso(Long id, Curso novoCurso) {
+	public void updateAluno(Long id, Aluno novoAluno) {
 		try {
 			em.getTransaction().begin();
 			
-			Curso curso = updateCursoData(findById(id), novoCurso);
-			em.merge(curso);
+			Aluno aluno = updateAlunoData(findById(id), novoAluno);
+			em.merge(aluno);
 			
 			em.getTransaction().commit();
 		} catch (Exception e) {
@@ -66,18 +65,18 @@ public class CursoDaoEm implements CursoDao {
 	}
 
 	@Override
-	public List<Curso> findAll() {
-		TypedQuery <Curso> query = em.createQuery("SELECT curso FROM Curso curso", Curso.class);
+	public List<Aluno> findAll() {
+		TypedQuery <Aluno> query = em.createQuery("SELECT aluno FROM Aluno aluno", Aluno.class);
 		return query.getResultList();
 	}
-
+	
 	@Override
-	public Curso findById(Long id) {
-		Curso curso = em.find(Curso.class, id);
-		if(curso == null) {
+	public Aluno findById(Long id) {
+		Aluno aluno = em.find(Aluno.class, id);
+		if (aluno == null) {
 			throw new DbNotFoundException(id);
 		}
-		return curso;
+		return aluno;
 	}
 	
 	@Override
@@ -86,11 +85,14 @@ public class CursoDaoEm implements CursoDao {
 		emf.close();
 	}
 	
-	private Curso updateCursoData(Curso velhoCurso, Curso novoCurso) {
+	private Aluno updateAlunoData(Aluno velhoAluno, Aluno novoAluno) {
+		velhoAluno.setNome(novoAluno.getNome());
+		velhoAluno.setCpf(novoAluno.getCpf());
+		velhoAluno.setDataNascimento(novoAluno.getDataNascimento());
+		velhoAluno.setEndereco(novoAluno.getEndereco());
+		velhoAluno.setSexo(novoAluno.getSexo());
 		
-		velhoCurso.setNome(novoCurso.getNome());
-		velhoCurso.setSemestres(novoCurso.getSemestres());
-		
-		return velhoCurso;
+		return velhoAluno;
 	}
+
 }
