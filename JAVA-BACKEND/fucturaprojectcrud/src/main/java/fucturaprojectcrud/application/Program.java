@@ -84,5 +84,7 @@ public class Program {
 		adao.deleteById(3L);
 		cdao.deleteById(3L);
 		pdao.deleteById(2L);
+		
+		ddao.closeConnections();
 	}
 }

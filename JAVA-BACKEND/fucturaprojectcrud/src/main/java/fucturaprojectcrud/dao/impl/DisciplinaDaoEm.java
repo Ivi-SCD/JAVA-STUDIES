@@ -3,12 +3,11 @@ package fucturaprojectcrud.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import fucturaprojectcrud.connection.ConnectionFactory;
 import fucturaprojectcrud.dao.DisciplinaDao;
 import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.db.DbPersistenceException;
@@ -17,8 +16,7 @@ import fucturaprojectcrud.entities.Disciplina;
 
 public class DisciplinaDaoEm implements DisciplinaDao {
 	
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
-	private EntityManager em = emf.createEntityManager();
+	EntityManager em = ConnectionFactory.getEntityManager();
 
 	@Override
 	@Transactional
@@ -88,7 +86,7 @@ public class DisciplinaDaoEm implements DisciplinaDao {
 	@Override
 	public void closeConnections() {
 		em.close();
-		emf.close();
+		ConnectionFactory.closeConnections();
 	}
 	
 	private Disciplina updateDisciplinaData(Disciplina velhaDisciplina, Disciplina novaDisciplina) {

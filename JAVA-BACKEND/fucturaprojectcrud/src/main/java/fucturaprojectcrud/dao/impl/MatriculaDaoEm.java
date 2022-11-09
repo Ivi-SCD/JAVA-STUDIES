@@ -3,11 +3,10 @@ package fucturaprojectcrud.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import fucturaprojectcrud.connection.ConnectionFactory;
 import fucturaprojectcrud.dao.MatriculaDao;
 import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.db.DbPersistenceException;
@@ -16,8 +15,7 @@ import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
-	private EntityManager em = emf.createEntityManager();
+	EntityManager em = ConnectionFactory.getEntityManager();
 	
 	@Override
 	public void insert(Matricula matricula) {
@@ -57,6 +55,6 @@ public class MatriculaDaoEm implements MatriculaDao {
 	@Override
 	public void closeConnections() {
 		em.close();
-		emf.close();
+		ConnectionFactory.closeConnections();
 	}
 }

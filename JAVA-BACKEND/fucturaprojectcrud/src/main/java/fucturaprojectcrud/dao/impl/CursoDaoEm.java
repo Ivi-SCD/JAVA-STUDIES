@@ -3,13 +3,12 @@ package fucturaprojectcrud.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import fucturaprojectcrud.connection.ConnectionFactory;
 import fucturaprojectcrud.dao.CursoDao;
 import fucturaprojectcrud.db.DbNotFoundException;
 import fucturaprojectcrud.db.DbPersistenceException;
@@ -18,9 +17,8 @@ import fucturaprojectcrud.entities.Curso;
 
 public class CursoDaoEm implements CursoDao {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("fuctura");
-	private EntityManager em = emf.createEntityManager();
-
+	EntityManager em = ConnectionFactory.getEntityManager();
+	
 	@Override
 	@Transactional
 	public void insert(Curso curso) {
@@ -95,7 +93,7 @@ public class CursoDaoEm implements CursoDao {
 	@Override
 	public void closeConnections() {
 		em.close();
-		emf.close();
+		ConnectionFactory.closeConnections();
 	}
 	
 	private Curso updateCursoData(Curso velhoCurso, Curso novoCurso) {
