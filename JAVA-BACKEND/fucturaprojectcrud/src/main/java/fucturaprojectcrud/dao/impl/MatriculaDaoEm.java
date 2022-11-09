@@ -15,7 +15,7 @@ import fucturaprojectcrud.entities.Matricula;
 
 public class MatriculaDaoEm implements MatriculaDao {
 
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 	
 	@Override
 	public void insert(Matricula matricula) {

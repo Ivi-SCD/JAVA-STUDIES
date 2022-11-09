@@ -17,7 +17,7 @@ import fucturaprojectcrud.entities.Curso;
 
 public class CursoDaoEm implements CursoDao {
 
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 	
 	@Override
 	@Transactional

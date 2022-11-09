@@ -16,7 +16,7 @@ import fucturaprojectcrud.entities.Disciplina;
 
 public class DisciplinaDaoEm implements DisciplinaDao {
 	
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 
 	@Override
 	@Transactional

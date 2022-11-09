@@ -16,7 +16,7 @@ import fucturaprojectcrud.entities.Endereco;
 
 public class EnderecoDaoEm implements EnderecoDao {
 	
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 	
 	@Override
 	@Transactional

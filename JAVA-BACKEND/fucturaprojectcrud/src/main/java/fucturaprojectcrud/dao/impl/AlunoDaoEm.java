@@ -17,7 +17,7 @@ import fucturaprojectcrud.entities.Aluno;
 
 public class AlunoDaoEm implements AlunoDao {
 	
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 
 	@Override
 	@Transactional

@@ -17,7 +17,7 @@ import fucturaprojectcrud.entities.Professor;
 
 public class ProfessorDaoEm implements ProfessorDao {
 	
-	EntityManager em = ConnectionFactory.getEntityManager();
+	private EntityManager em = ConnectionFactory.getEntityManager();
 
 	@Override
 	@Transactional
