@@ -16,5 +16,4 @@ public class TestesAdapter {
 		RegistroDeOrcamento registro = new RegistroDeOrcamento(new JavaHttpClient());
 		registro.registrar(orcamento);
 	}
-
 }
