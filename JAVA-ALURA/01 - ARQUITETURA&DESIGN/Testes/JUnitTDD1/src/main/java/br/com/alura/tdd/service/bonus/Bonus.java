@@ -1,4 +1,4 @@
-package br.com.alura.tdd.service;
+package br.com.alura.tdd.service.bonus;
 
 import java.math.BigDecimal;
 

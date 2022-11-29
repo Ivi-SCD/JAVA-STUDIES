@@ -3,6 +3,7 @@ package br.com.alura.tdd.service;
 import java.math.BigDecimal;
 
 import br.com.alura.tdd.modelo.Funcionario;
+import br.com.alura.tdd.service.bonus.Bonus;
 
 public class BonusService {
 
