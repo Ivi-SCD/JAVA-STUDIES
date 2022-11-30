@@ -1,5 +1,7 @@
 package br.com.alura.leilao.dao;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
@@ -48,4 +50,12 @@ class UsuarioDaoTest {
 		Assert.assertThrows(NoResultException.class, () -> this.dao.buscarPorUsername("beltrano"));
 	}
 
+	@Test
+	void deveriaRemoverUsuario() {
+		Usuario usuario = criarUsuario();
+		dao.deletar(usuario);
+		
+		assertThrows(NoResultException.class, ()-> this.dao.buscarPorUsername(usuario.getNome()));
+	}
+	
 }

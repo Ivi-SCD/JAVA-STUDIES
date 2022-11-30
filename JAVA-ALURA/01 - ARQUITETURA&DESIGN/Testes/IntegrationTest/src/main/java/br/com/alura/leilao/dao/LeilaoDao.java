@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.alura.leilao.model.Leilao;
@@ -14,11 +14,15 @@ import br.com.alura.leilao.model.Usuario;
 @Repository
 public class LeilaoDao {
 
-	@PersistenceContext
 	private EntityManager em;
 
-	public void salvar(Leilao leilao) {
-		em.merge(leilao);
+	@Autowired
+	public LeilaoDao(EntityManager em) {
+		this.em = em;
+	}
+
+	public Leilao salvar(Leilao leilao) {
+		return em.merge(leilao);
 	}
 
 	public Leilao buscarPorId(Long id) {
