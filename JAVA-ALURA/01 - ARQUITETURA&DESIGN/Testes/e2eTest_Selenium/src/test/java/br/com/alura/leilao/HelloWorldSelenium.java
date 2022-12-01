@@ -9,7 +9,6 @@ public class HelloWorldSelenium {
 	@Test
 	public void hello() {
 		System.setProperty("webdriver.edge.driver", "drivers/msedgedriver.exe");
-		
 		WebDriver browser = new EdgeDriver();
 		browser.navigate().to("http://localhost:8080/leiloes");
 		
