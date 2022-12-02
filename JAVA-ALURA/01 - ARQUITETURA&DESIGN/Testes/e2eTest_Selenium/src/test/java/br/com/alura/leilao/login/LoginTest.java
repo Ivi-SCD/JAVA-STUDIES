@@ -8,13 +8,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.alura.leilao.util.driver.enums.Drivers;
+
 public class LoginTest {
 	
 	private LoginPage paginaDeLogin;
 	
 	@BeforeEach
 	void beforeEach() {
-		paginaDeLogin = new LoginPage();
+		paginaDeLogin = new LoginPage(Drivers.EDGE);
 	}
 	
 	@AfterEach

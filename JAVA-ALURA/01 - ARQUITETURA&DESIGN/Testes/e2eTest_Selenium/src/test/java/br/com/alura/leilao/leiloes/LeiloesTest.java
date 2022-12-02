@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import br.com.alura.leilao.login.LoginPage;
+import br.com.alura.leilao.util.driver.enums.Drivers;
 
 public class LeiloesTest {
 	private LeiloesPage paginaDeLeiloes;
@@ -18,7 +19,7 @@ public class LeiloesTest {
 	
 	@BeforeEach
 	void beforeEach() {
-		LoginPage paginaDeLogin = new LoginPage();
+		LoginPage paginaDeLogin = new LoginPage(Drivers.EDGE);
 		this.paginaDeLeiloes = paginaDeLogin.executaLogin("fulano", "pass");
 		paginaDeCadastro = paginaDeLeiloes.carregarFormulario();
 	}
