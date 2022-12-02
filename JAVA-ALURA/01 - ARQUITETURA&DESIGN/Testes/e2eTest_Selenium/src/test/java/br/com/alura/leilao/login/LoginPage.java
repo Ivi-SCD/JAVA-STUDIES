@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
+import br.com.alura.leilao.leiloes.LeiloesPage;
 import br.com.alura.leilao.util.driver.enums.Drivers;
 import br.com.alura.leilao.util.driver.enums.SeleniumDriver;
 
@@ -29,10 +30,12 @@ public class LoginPage {
 		return browser.getPageSource().contains(content);
 	}
 	
-	public void executaLogin(String username, String senha) {
+	public LeiloesPage executaLogin(String username, String senha) {
 		browser.findElement(By.id("username")).sendKeys(username);
 		browser.findElement(By.id("password")).sendKeys(senha);
 		browser.findElement(By.id("login-form")).submit();
+		
+		return new LeiloesPage(browser);
 	}
 
 	public String getNomeUsuarioLogado() {
