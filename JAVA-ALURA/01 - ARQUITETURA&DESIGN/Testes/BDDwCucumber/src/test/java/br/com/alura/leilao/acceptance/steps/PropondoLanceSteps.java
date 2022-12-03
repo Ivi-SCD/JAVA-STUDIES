@@ -1,11 +1,13 @@
 package br.com.alura.leilao.acceptance.steps;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import br.com.alura.leilao.model.Lance;
 import br.com.alura.leilao.model.Leilao;
@@ -25,21 +27,20 @@ public class PropondoLanceSteps {
 	public void setup() {
 		this.lista = new ArrayList<Lance>();
 		leilao = new Leilao("Tablet XPTO");
-		System.out.println("Before");
 	}
 	
-	@Dado("Um lance valido")
+	@Dado("um lance valido")
 	public void dado_um_lance_valido() {
 	    Usuario usuario = new Usuario("fulano", "fulano@email.com", "pass");
 		lance = new Lance(usuario, BigDecimal.TEN);
 	}
 
-	@Quando("Propoe ao leilao")
+	@Quando("propoe ao leilao")
 	public void quando_propoe_o_lance() {
 	    leilao.propoe(lance);
 	}
 	
-	@Entao("O lance e aceito")
+	@Entao("o lance e aceito")
 	public void entao_o_lance_e_aceito() {
 	    assertTrue(leilao.getLances().contains(lance));
 	    assertTrue(leilao.getLances().size() == 1);
@@ -74,6 +75,44 @@ public class PropondoLanceSteps {
 		assertEquals(this.lista.get(0).getValor(), leilao.getLances().get(0).getValor());
 		assertEquals(this.lista.get(1).getValor(), leilao.getLances().get(1).getValor());
 	}
+
+	@Dado("um lance invalido do usuario {string} de {int} reais")
+	public void um_lance_invalido_do_usuario_de_reais(String nome, Integer valor) {
+	    assertThrows(IllegalArgumentException.class, 
+	    		() ->  this.lance = new Lance(new Usuario(nome), new BigDecimal(valor)));
+	}
+	
+	@Quando("propoe o lance ao leilao")
+	public void propoe_o_lance_ao_leilao() {
+		
+		assertThrows(NullPointerException.class, () -> leilao.propoe(lance));
+		
+	}
+	@Entao("o lance nao e aceito")
+	public void o_lance_nao_e_aceito() {
+	    assertEquals(leilao.getLances().get(0), null);
+	}
+	
+	
+	@Dado("dois lances")
+	public void dois_lances(io.cucumber.datatable.DataTable dataTable) {
+	    List <Map<String, String>> val = dataTable.asMaps();
+	    
+	    for(Map<String, String> mapa : val) {
+	    	String valor = mapa.get("valor");
+	    	String usuario = mapa.get("nomeUsuario");
+	    	
+	    	lance = new Lance(new Usuario(usuario), new BigDecimal(valor));
+	    	lista.add(lance);
+	    }
+	}
+
+	@Entao("o segundo lance nao e aceito")
+	public void o_segundo_lance_nao_e_aceito() {
+	    assertEquals(2, leilao.getLances().size());
+	    assertEquals(this.lista.get(0).getValor(), leilao.getLances().get(0).getValor());
+	}
+
 
 	
 }
