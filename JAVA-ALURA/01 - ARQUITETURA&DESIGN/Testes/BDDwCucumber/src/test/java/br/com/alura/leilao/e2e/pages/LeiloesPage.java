@@ -76,4 +76,8 @@ public class LeiloesPage {
 				By.xpath("//table[@class='table table-hover']/tbody/tr/td[contains(text(),'" +donoDoLeilao+ "')]/following-sibling::td/a"));
 		return href.getText().contains("editar");
 	}
+
+	public boolean estaNaPaginaDeLeiloes() {
+		return this.driver.getCurrentUrl().endsWith("/leiloes");
+	}
 }
