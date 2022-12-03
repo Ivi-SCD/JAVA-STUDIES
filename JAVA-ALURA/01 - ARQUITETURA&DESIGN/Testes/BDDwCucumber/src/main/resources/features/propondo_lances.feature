@@ -1,11 +1,14 @@
-Feature: Propondo lances ao leilao
+# language : pt
 
-Scenario: Propondo um unico lance valido
-	Given (Dado): Um lance valido
-	When (Quando): Propoe ao leilao
-	Then (Entao): O lance e aceito
+Funcionalidade: Propondo lances ao leilao
+
+Cenario: Propondo um unico lance valido
+ Dado Um lance valido
+ Quando Propoe ao leilao
+ Entao O lance e aceito
 	
-Scenario: Propondo varios lances validos
-	Given (Dado): varios lances validos
-	When (Quando): propoe varios lances ao leilao
-	Then (Entao): os lances sao aceitos
+Cenario: Propondo varios lances validos
+ Dado um lance de 10.0 reais do usuario "fulano"
+ E um lance de 15.0 reais do usuario "beltrano"
+ Quando propoe varios lances ao leilao
+ Entao os lances sao aceitos
